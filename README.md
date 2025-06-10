@@ -1,0 +1,1 @@
+Simple python Script using CoolProp library for a simple Rankine Cycle thermodynamic calculation. Enter Turbine inlet pressure, temperature, Turbine exhaust temperature along with Turbine and Pump efficiencies to find thermal efficiency work done by each component of the Rankine Cycle.
