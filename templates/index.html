@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rankine Cycle Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f6f9fc;
+        }
+        .card {
+            margin-top: 40px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .results-list li {
+            margin-bottom: 8px;
+        }
+        .app-title {
+            letter-spacing: 1px;
+            color: #1a237e;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="app-title mb-4 text-center"><img src="{{ url_for('static', filename='Horizontal_Logo_Black_Comp.png') }}" alt="Logo" style="height: 120px; vertical-align: middle; margin-bottom: 8px;">
+        <span style="display:block; margin-top:10px;">Rankine Cycle Calculator</span></h1>
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="P2" class="form-label">Boiler Pressure [kPa]</label>
+                                <input type="number" step="any" class="form-control" id="P2" name="P2" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="T3" class="form-label">Steam Inlet Temp [°C]</label>
+                                <input type="number" step="any" class="form-control" id="T3" name="T3" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="P4" class="form-label">Turbine Exhaust Pressure [kPa]</label>
+                                <input type="number" step="any" class="form-control" id="P4" name="P4" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nT" class="form-label">Turbine Efficiency (decimal, e.g., 0.85)</label>
+                                <input type="number" step="any" class="form-control" id="nT" name="nT" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nP" class="form-label">Pump Efficiency (decimal, e.g., 0.75)</label>
+                                <input type="number" step="any" class="form-control" id="nP" name="nP" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Calculate</button>
+                            </div>
+                        </form>
+
+                        {% if results %}
+                            <div class="mt-4">
+                                {% if results.error %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Error:</strong> {{ results.error }}
+                                    </div>
+                                {% else %}
+                                    <h3 class="mt-3 mb-3 text-success">Results</h3>
+                                    <ul class="results-list list-group">
+                                        <li class="list-group-item">Turbine Actual Work: <strong>{{ results.wta }} kJ/kg</strong></li>
+                                        <li class="list-group-item">Pump Actual Work: <strong>{{ results.wpa }} kJ/kg</strong></li>
+                                        <li class="list-group-item">Net Work Out: <strong>{{ results.wnet }} kJ/kg</strong></li>
+                                        <li class="list-group-item">Turbine Exhaust Steam Quality: <strong>{{ results.x4 }}</strong></li>
+                                        <li class="list-group-item">Condenser Duty: <strong>{{ results.qout }} kJ/kg</strong></li>
+                                        <li class="list-group-item">Boiler Duty: <strong>{{ results.qin }} kJ/kg</strong></li>
+                                        <li class="list-group-item">Thermal Efficiency: <strong>{{ results.teff }}</strong></li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <footer class="text-center mt-4 text-muted" style="font-size: 0.95em;">
+                    &copy; {{ 2024 }} Rankine Cycle Calculator | Made with Flask & Bootstrap
+                </footer>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap 5 JS (for interactive components, optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
